@@ -75,6 +75,10 @@ const routes = [
 
   // TODO 6: Add the /about route
   { path: '/about', component: AboutView },
+
+  // Catch-all: any unmatched URL (e.g. /9999) bounces home with the error flag,
+  // same as a non-existent task id.
+  { path: '/:pathMatch(.*)*', redirect: { path: '/home', query: { error: 'notfound' } } },
 ]
 
 const router = createRouter({
