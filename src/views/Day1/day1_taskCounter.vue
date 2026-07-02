@@ -180,16 +180,17 @@ function clearAllDone() {
 
 <style scoped>
 .app {
-  max-width: 480px;
-  margin: 40px auto;
-  font-family: Arial, sans-serif;
-  padding: 24px;
-  background: #f9fafb;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  width: 100%;
+  font-family: var(--vt-font);
+  color: var(--vt-ink);
 }
 
-h1 { color: #1B2A4A; margin-bottom: 20px; }
+h1 {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0 0 20px;
+}
 
 .input-row {
   display: flex;
@@ -199,38 +200,52 @@ h1 { color: #1B2A4A; margin-bottom: 20px; }
 
 .input-row input {
   flex: 1;
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  padding: 11px 14px;
+  border: 1px solid var(--vt-border);
+  border-radius: var(--vt-radius);
   font-size: 14px;
+  font-family: inherit;
+  color: var(--vt-ink);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.input-row input:focus {
+  border-color: var(--vt-accent);
+  box-shadow: 0 0 0 3px rgba(66, 184, 131, 0.15);
 }
 
 .priority-select {
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  padding: 11px 12px;
+  border: 1px solid var(--vt-border);
+  border-radius: var(--vt-radius);
   font-size: 14px;
-  background: white;
+  font-family: inherit;
+  background: var(--vt-card);
+  color: var(--vt-ink);
   cursor: pointer;
 }
 
 .input-row button {
-  padding: 8px 16px;
-  background: #42B883;
-  color: white;
+  padding: 11px 18px;
+  background: var(--vt-accent);
+  color: #fff;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--vt-radius);
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 700;
+  font-size: 14px;
+  transition: background 0.15s ease;
 }
+.input-row button:hover { background: var(--vt-accent-dark); }
 
 .stats {
   font-size: 13px;
-  color: #666;
+  color: var(--vt-body);
   margin-bottom: 16px;
-  padding: 8px 12px;
-  background: #e9f7f0;
-  border-radius: 6px;
+  padding: 10px 14px;
+  background: var(--vt-accent-soft);
+  border: 1px solid #d7f0e3;
+  border-radius: var(--vt-radius);
 }
 
 .filter-row {
@@ -246,28 +261,32 @@ h1 { color: #1B2A4A; margin-bottom: 20px; }
 }
 
 .filters button {
-  padding: 4px 12px;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  padding: 6px 14px;
+  background: var(--vt-card);
+  border: 1px solid var(--vt-border);
+  border-radius: 999px;
   cursor: pointer;
   font-size: 13px;
+  font-weight: 600;
+  color: var(--vt-body);
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 
 .filters button.active {
-  background: #42B883;
-  color: white;
-  border-color: #42B883;
+  background: var(--vt-accent);
+  color: #fff;
+  border-color: var(--vt-accent);
 }
 
 .clear-done {
-  padding: 4px 12px;
-  background: #fee2e2;
-  color: #dc2626;
+  padding: 6px 14px;
+  background: var(--vt-danger-bg);
+  color: var(--vt-danger);
   border: none;
-  border-radius: 6px;
+  border-radius: 999px;
   cursor: pointer;
   font-size: 13px;
+  font-weight: 600;
 }
 
 .clear-done:disabled {
@@ -277,7 +296,7 @@ h1 { color: #1B2A4A; margin-bottom: 20px; }
 
 .empty {
   text-align: center;
-  color: #aaa;
+  color: var(--vt-muted);
   font-style: italic;
   margin: 32px 0;
 }
@@ -286,36 +305,50 @@ h1 { color: #1B2A4A; margin-bottom: 20px; }
   list-style: none;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .task-list li {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-  background: white;
-  border-radius: 6px;
-  margin-bottom: 8px;
-  border: 1px solid #eee;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--vt-card);
+  border-radius: var(--vt-radius);
+  border: 1px solid var(--vt-border);
+  box-shadow: var(--vt-shadow);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+.task-list li:hover {
+  border-color: var(--vt-accent);
+  box-shadow: var(--vt-shadow-hover);
+  transform: translateY(-2px);
 }
 
 .task-list li span {
   flex: 1;
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--vt-ink);
 }
 
 /* Apply this class to task names when task.done is true */
 .done {
   text-decoration: line-through;
-  color: #aaa;
+  color: var(--vt-muted);
+  font-weight: 500;
 }
 
 .badge {
   flex: none !important;
-  padding: 2px 8px;
+  padding: 3px 10px;
   border-radius: 999px;
   font-size: 11px;
-  font-weight: bold;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
 .badge.low    { background: #e0f2fe; color: #0369a1; }
@@ -323,12 +356,15 @@ h1 { color: #1B2A4A; margin-bottom: 20px; }
 .badge.high   { background: #fee2e2; color: #dc2626; }
 
 .task-list li button {
-  padding: 4px 10px;
-  background: #fee2e2;
-  color: #dc2626;
+  padding: 6px 12px;
+  background: var(--vt-danger-bg);
+  color: var(--vt-danger);
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 12.5px;
+  font-weight: 600;
+  transition: background 0.15s ease;
 }
+.task-list li button:hover { background: #fecaca; }
 </style>

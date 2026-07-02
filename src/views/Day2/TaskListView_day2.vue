@@ -74,12 +74,10 @@ const percent = computed(() =>
 
 <style scoped>
 .task-list-view {
+  position: relative;
   width: 100%;
-  max-width: 520px;
-  margin: 40px auto;
-  padding: 24px;
   box-sizing: border-box;
-  font-family: 'Segoe UI', Arial, sans-serif;
+  font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
 }
 
 /* ─── Header with progress summary ─── */

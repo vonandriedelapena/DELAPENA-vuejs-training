@@ -55,9 +55,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 // TODO 1: Import your view components
-import HomeView       from '@/views/HomeView.vue'
-import TaskDetailView from '@/views/TaskDetailView.vue'
-import AboutView      from '@/views/AboutView.vue'
+import HomeView       from '@/views/Day3/HomeView.vue'
+import TaskDetailView from '@/views/Day3/TaskDetailView.vue'
+import AboutView      from '@/views/Day3/AboutView.vue'
+
+// Day 1, 2 & 4 entry views (for the top-level day navigation)
+import Day1Counter     from '@/views/Day1/day1_taskCounter.vue'
+import Day2TaskList     from '@/views/Day2/TaskListView_day2.vue'
+import Day4TaskList     from '@/views/Day4/TaskListView.vue'
 
 // TODO 2: Import your Pinia task store so the guard can check if a task exists
 import { useTaskStore } from '@/stores/taskStore'
@@ -66,7 +71,12 @@ const routes = [
   // TODO 3: Add a redirect from '/' to '/home'
   { path: '/', redirect: '/home' },
 
-  // TODO 4: Add the /home route
+  // Day 1, 2 & 4 assignment views
+  { path: '/day1', component: Day1Counter },
+  { path: '/day2', component: Day2TaskList },
+  { path: '/day4', component: Day4TaskList },
+
+  // TODO 4: Add the /home route (Day 3 home)
   { path: '/home', component: HomeView },
 
   // TODO 5: Add the /task/:id dynamic route

@@ -61,9 +61,7 @@ function goBack() {
 
 <style scoped>
 .detail-view {
-  max-width: 520px;
-  margin: 48px auto;
-  padding: 0 20px;
+  width: 100%;
   font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
   color: #1b2a4a;
 }

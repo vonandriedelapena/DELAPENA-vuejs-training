@@ -48,9 +48,7 @@ const showErrorBanner = computed(() => route.query.error === 'notfound')
 
 <style scoped>
 .home-view {
-  max-width: 520px;
-  margin: 48px auto;
-  padding: 0 20px;
+  width: 100%;
   font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
   color: #1b2a4a;
 }
@@ -102,11 +100,14 @@ h1 {
   border-radius: 10px;
   text-decoration: none;
   color: inherit;
-  transition: border-color 0.15s ease, background 0.15s ease;
+  box-shadow: var(--vt-shadow);
+  transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
 }
 .task-link:hover {
   border-color: #42b883;
   background: #fafffc;
+  box-shadow: var(--vt-shadow-hover);
+  transform: translateY(-2px);
 }
 .task-link--done { background: #f0fdf4; border-color: #bbf7d0; }
 .task-link--done:hover { border-color: #42b883; }
