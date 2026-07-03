@@ -6,6 +6,7 @@ const days = [
   { to: '/day2', label: 'Day 2', hint: 'Components' },
   { to: '/home', label: 'Day 3', hint: 'Router' },
   { to: '/day4', label: 'Day 4', hint: 'Pinia' },
+  { to: '/day5', label: 'Day 5', hint: 'API' },
 ]
 </script>
 
