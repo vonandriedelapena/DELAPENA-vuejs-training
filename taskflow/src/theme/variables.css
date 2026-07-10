@@ -1,0 +1,29 @@
+/* For information on how to create your own theme, please refer to:
+http://ionicframework.com/docs/theming/ */
+
+/* ─────────────────────────────────────────────────────────────
+   Brand palette — a modern indigo primary replaces default blue.
+   Full shade/tint/contrast set so all Ionic components pick it up.
+   ───────────────────────────────────────────────────────────── */
+:root {
+  --ion-color-primary: #5b5bd6;
+  --ion-color-primary-rgb: 91, 91, 214;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #5050bc;
+  --ion-color-primary-tint: #6b6bda;
+
+  /* App-level design tokens used by our custom cards */
+  --app-radius: 16px;
+  --app-gap: 10px;
+
+  /* Solid accent colors (no gradients) */
+  --c-total: #5b5bd6;
+  --c-done: #10b981;
+  --c-pending: #f59e0b;
+
+  /* Priority colors — shared by the accent edge, labels and badges */
+  --c-high: #eb445a;
+  --c-med: #f0900e;
+  --c-low: #3b82f6;
+}
