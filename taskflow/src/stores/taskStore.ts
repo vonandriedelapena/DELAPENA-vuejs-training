@@ -30,6 +30,11 @@ export const useTaskStore = defineStore('tasks', () => {
   const doneCount = computed(() => tasks.value.filter((t) => t.done).length)
   const pendingCount = computed(() => totalCount.value - doneCount.value)
 
+  // Look up a single task by id (route params arrive as strings).
+  function getTaskById(id: number | string) {
+    return tasks.value.find((t) => t.id === Number(id))
+  }
+
   // --- actions ---
   // Guard against empty/whitespace names; priority defaults to Medium.
   function addTask(name: string, priority: Priority = 'Medium') {
@@ -62,6 +67,7 @@ export const useTaskStore = defineStore('tasks', () => {
     totalCount,
     doneCount,
     pendingCount,
+    getTaskById,
     addTask,
     toggleTask,
     setPriority,

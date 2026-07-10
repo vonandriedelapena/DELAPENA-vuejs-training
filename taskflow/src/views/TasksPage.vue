@@ -67,7 +67,11 @@
               :checked="task.done"
               @ionChange="toggleTask(task.id)"
             />
-            <ion-label :class="{ done: task.done }">{{ task.name }}</ion-label>
+            <!-- Tap the name to open the Task Detail page (Day 7 routing) -->
+            <ion-label class="task-name" :class="{ done: task.done }" @click="openTask(task.id)">
+              {{ task.name }}
+              <ion-icon :icon="chevronForward" class="chev" />
+            </ion-label>
 
             <!-- Priority: single inline editor, color-coded by level -->
             <ion-select
@@ -105,6 +109,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import {
   IonPage,
@@ -128,9 +133,10 @@ import {
   IonSegmentButton,
   alertController,
 } from '@ionic/vue';
-import { add, trashOutline, clipboardOutline, funnelOutline } from 'ionicons/icons';
+import { add, trashOutline, clipboardOutline, funnelOutline, chevronForward } from 'ionicons/icons';
 import { useTaskStore } from '@/stores/taskStore';
 
+const router = useRouter();
 const store = useTaskStore();
 // Reactive state from the store
 const { tasks, totalCount, doneCount, pendingCount } = storeToRefs(store);
@@ -145,6 +151,11 @@ const visibleTasks = computed(() => {
   if (filter.value === 'pending') return tasks.value.filter((t) => !t.done);
   return tasks.value;
 });
+
+// Navigate to the Task Detail page (Day 7 — useRouter().push())
+function openTask(id: number) {
+  router.push(`/tabs/tasks/${id}`);
+}
 
 // FAB → alert with a single text input (alerts can't mix text + radio inputs)
 async function presentAddAlert() {
@@ -238,6 +249,17 @@ ion-fab-button {
 .task-list ion-checkbox {
   --checkbox-background-checked: var(--ion-color-primary);
   --border-color-checked: var(--ion-color-primary);
+}
+/* Task name is tappable → opens detail */
+.task-name {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.chev {
+  font-size: 14px;
+  color: var(--ion-color-medium);
 }
 /* Priority accent edge + faint tint per row */
 .task-list ion-item.priority-high {
