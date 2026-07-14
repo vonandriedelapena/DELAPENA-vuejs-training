@@ -50,6 +50,19 @@
           </ion-item>
         </ion-list>
 
+        <!-- Day 8 -->
+        <div class="photo-card">
+          <ion-img v-if="task.photo" :src="task.photo" class="photo" />
+          <div v-else class="photo-empty">
+            <ion-icon :icon="imageOutline" />
+            <span>No photo attached</span>
+          </div>
+          <ion-button expand="block" fill="outline" @click="takePhoto">
+            <ion-icon slot="start" :icon="cameraOutline" />
+            {{ task.photo ? 'Replace photo' : 'Add photo' }}
+          </ion-button>
+        </div>
+
         <!-- Handy actions from the detail view -->
         <div class="actions">
           <ion-button expand="block" @click="toggleTask(task.id)">
@@ -92,6 +105,7 @@ import {
   IonBadge,
   IonIcon,
   IonButton,
+  IonImg,
 } from '@ionic/vue';
 import {
   checkmarkCircle,
@@ -104,13 +118,34 @@ import {
   arrowUndoOutline,
   trashOutline,
   alertCircleOutline,
+  cameraOutline,
+  imageOutline,
 } from 'ionicons/icons';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { useTaskStore } from '@/stores/taskStore';
 
 const route = useRoute();
 const router = useRouter();
 const store = useTaskStore();
-const { toggleTask, removeTask } = store;
+const { toggleTask, removeTask, addPhotoToTask } = store;
+
+// Day 8:
+async function takePhoto() {
+  if (!task.value) return;
+  try {
+    const photo = await Camera.getPhoto({
+      quality: 80,
+      allowEditing: false,
+      resultType: CameraResultType.Uri,
+      source: CameraSource.Camera,
+    });
+    if (photo.webPath) {
+      addPhotoToTask(task.value.id, photo.webPath);
+    }
+  } catch {
+    // User cancelled the camera / denied permission — nothing to do.
+  }
+}
 
 // Day 7 step 4: read the :id route param and find the task from Pinia.
 // computed() keeps it reactive so store changes (toggle) update the view.
@@ -161,6 +196,41 @@ function handleRemove() {
 .ptext-high { color: var(--c-high); font-weight: 600; }
 .ptext-medium { color: var(--c-med); font-weight: 600; }
 .ptext-low { color: var(--c-low); font-weight: 600; }
+
+/* Day 8: photo card */
+.photo-card {
+  margin: 0 16px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.photo {
+  width: 100%;
+  border-radius: var(--app-radius);
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+/* Keep the detail photo a consistent, nicely-cropped card height */
+.photo::part(image) {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+}
+.photo-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 40px 16px;
+  border: 2px dashed var(--ion-color-step-300, #ccc);
+  border-radius: var(--app-radius);
+  color: var(--ion-color-medium);
+  font-size: 14px;
+}
+.photo-empty ion-icon {
+  font-size: 40px;
+}
 
 .actions {
   padding: 8px 16px 24px;

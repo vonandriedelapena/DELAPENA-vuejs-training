@@ -67,13 +67,16 @@
               :checked="task.done"
               @ionChange="toggleTask(task.id)"
             />
-            <!-- Tap the name to open the Task Detail page (Day 7 routing) -->
+
+            <ion-thumbnail v-if="task.photo" slot="start" class="thumb">
+              <ion-img :src="task.photo" />
+            </ion-thumbnail>
+
             <ion-label class="task-name" :class="{ done: task.done }" @click="openTask(task.id)">
               {{ task.name }}
               <ion-icon :icon="chevronForward" class="chev" />
             </ion-label>
 
-            <!-- Priority: single inline editor, color-coded by level -->
             <ion-select
               slot="end"
               :value="task.priority"
@@ -131,6 +134,8 @@ import {
   IonIcon,
   IonSegment,
   IonSegmentButton,
+  IonThumbnail,
+  IonImg,
   alertController,
 } from '@ionic/vue';
 import { add, trashOutline, clipboardOutline, funnelOutline, chevronForward } from 'ionicons/icons';
@@ -245,10 +250,26 @@ ion-fab-button {
 }
 .task-list ion-item {
   --padding-start: 12px;
+  /* Keep every row the same height whether or not it has a photo */
+  --min-height: 64px;
 }
 .task-list ion-checkbox {
   --checkbox-background-checked: var(--ion-color-primary);
   --border-color-checked: var(--ion-color-primary);
+  margin-inline-end: 12px;
+}
+/* Day 8: task photo thumbnail */
+.thumb {
+  --size: 46px;
+  --border-radius: 12px;
+  margin: 8px 12px 8px 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+/* Crop the photo to fill the square instead of stretching it */
+.thumb ion-img::part(image) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 /* Task name is tappable → opens detail */
 .task-name {

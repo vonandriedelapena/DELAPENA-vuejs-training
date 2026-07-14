@@ -1,9 +1,3 @@
-// =============================================================
-//  DAY 6 — Pinia Store ported from the Day 1 Task Counter
-//  The Day 1 app kept everything in local ref()s. Here the same
-//  reactive logic lives in a centralized Pinia store so the
-//  Tasks / Completed / Settings tabs all share one source of truth.
-// =============================================================
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 
@@ -14,6 +8,7 @@ export interface Task {
   name: string
   done: boolean
   priority: Priority
+  photo?: string
 }
 
 export const useTaskStore = defineStore('tasks', () => {
@@ -53,6 +48,11 @@ export const useTaskStore = defineStore('tasks', () => {
     if (task) task.priority = priority
   }
 
+  function addPhotoToTask(id: number, path: string) {
+    const task = tasks.value.find((t) => t.id === id)
+    if (task) task.photo = path
+  }
+
   function removeTask(id: number) {
     tasks.value = tasks.value.filter((t) => t.id !== id)
   }
@@ -71,6 +71,7 @@ export const useTaskStore = defineStore('tasks', () => {
     addTask,
     toggleTask,
     setPriority,
+    addPhotoToTask,
     removeTask,
     clearAllDone,
   }

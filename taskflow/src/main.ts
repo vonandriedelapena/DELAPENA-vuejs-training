@@ -5,6 +5,9 @@ import router from './router';
 import { createPinia } from 'pinia';
 import { IonicVue } from '@ionic/vue';
 
+/* PWA Elements — provides the in-browser camera modal for @capacitor/camera on the web */
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
+
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
 
@@ -43,3 +46,6 @@ const app = createApp(App)
 router.isReady().then(() => {
   app.mount('#app');
 });
+
+// Register the PWA Elements (camera modal, etc.) with the browser
+defineCustomElements(window);
