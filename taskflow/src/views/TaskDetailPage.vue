@@ -129,18 +129,21 @@ const router = useRouter();
 const store = useTaskStore();
 const { toggleTask, removeTask, addPhotoToTask } = store;
 
-// Day 8:
+// Day 8 + Day 9: capture from the camera as a base64 Data URL so the photo
+// is a self-contained string that survives close/reopen (Preferences persist).
+// (A blob: webPath would not survive a reload on the web.)
 async function takePhoto() {
   if (!task.value) return;
   try {
     const photo = await Camera.getPhoto({
-      quality: 80,
+      quality: 70,
+      width: 800, // cap dimensions to keep the base64 string small
       allowEditing: false,
-      resultType: CameraResultType.Uri,
+      resultType: CameraResultType.DataUrl,
       source: CameraSource.Camera,
     });
-    if (photo.webPath) {
-      addPhotoToTask(task.value.id, photo.webPath);
+    if (photo.dataUrl) {
+      addPhotoToTask(task.value.id, photo.dataUrl);
     }
   } catch {
     // User cancelled the camera / denied permission — nothing to do.
